@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/${ schema }?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ${ password }
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+application:
+  jwt:
+    secretKey: aa71d145159683a27c3c1ddc4c2f5bfbd1e979a4708355fa9ae614ef61bc8f90
+    expiration: 86400000    # 24시간
+    refreshExpiration: 604800000   # 7일
