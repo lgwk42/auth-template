@@ -52,35 +52,35 @@ YML은 MySQL과 JPA를 사용하는 기준으로 작성되었습니다.
 ## Gradle
 버전 관리는 Gradle를 사용하였으며 아래와 같은 라이브러리를 사용하였습니다.
 ```gradle
-    // jpa
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+// jpa
+implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    // security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+// security
+implementation 'org.springframework.boot:spring-boot-starter-security'
 
-    // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+// lombok
+compileOnly 'org.projectlombok:lombok'
+annotationProcessor 'org.projectlombok:lombok'
 
-    // mysql
-    runtimeOnly 'com.mysql:mysql-connector-j'
+// mysql
+runtimeOnly 'com.mysql:mysql-connector-j'
 
-    // junit
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+// junit
+testImplementation 'org.springframework.boot:spring-boot-starter-test'
+testImplementation 'org.springframework.security:spring-security-test'
+testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    // swagger
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+// swagger
+implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
-    // jwt
-    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
-    implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
-    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+// jwt
+implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
+implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
-    // web
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+// web
+implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // validation
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+// validation
+implementation 'org.springframework.boot:spring-boot-starter-validation'
 ```
