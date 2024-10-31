@@ -6,6 +6,7 @@ import com.project.authtemplate.domain.user.exception.UserNotFoundException;
 import com.project.authtemplate.global.security.auth.CustomUserDetails;
 import com.project.authtemplate.global.security.jwt.config.JwtProperties;
 import io.jsonwebtoken.Jwts;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -25,11 +26,15 @@ public class JwtExtract {
     private final UserJpaRepository userRepository;
     private final User userDTO;
     private final JwtProperties jwtProperties;
+    private SecretKey secretKey;
 
-    private final SecretKey secretKey = new SecretKeySpec(
-            this.jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8),
-            Jwts.SIG.HS256.key().build().getAlgorithm()
-    );
+    @PostConstruct
+    public void init() {
+        this.secretKey = new SecretKeySpec(
+                jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8),
+                Jwts.SIG.HS256.key().build().getAlgorithm()
+        );
+    }
 
     public Authentication getAuthentication(final String token) {
         User user = userRepository

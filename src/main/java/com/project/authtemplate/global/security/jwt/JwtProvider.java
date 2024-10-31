@@ -7,6 +7,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.UnsupportedJwtException;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,11 +21,15 @@ import java.util.Date;
 public class JwtProvider {
 
     private final JwtProperties jwtProperties;
+    private SecretKey secretKey;
 
-    private final SecretKey secretKey = new SecretKeySpec(
-            this.jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8),
-            Jwts.SIG.HS256.key().build().getAlgorithm()
-    );
+    @PostConstruct
+    public void init() {
+        this.secretKey = new SecretKeySpec(
+                jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8),
+                Jwts.SIG.HS256.key().build().getAlgorithm()
+        );
+    }
 
     public Jws<Claims> getClaims(final String token) {
         try {
