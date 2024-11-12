@@ -5,13 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class JsonWebTokenResponse {
+public record JsonWebTokenResponse (
 
-    private String accessToken;
-    private String refreshToken;
+    String accessToken,
+    String refreshToken
 
-}
+){}

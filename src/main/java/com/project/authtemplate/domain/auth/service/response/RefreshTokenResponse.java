@@ -5,12 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class RefreshTokenResponse {
+public record RefreshTokenResponse (
 
-    private String accessToken;
+    String accessToken
 
-}
+){}
