@@ -1,8 +1,8 @@
 package com.project.authtemplate.domain.auth.client.api;
 
-import com.project.authtemplate.domain.auth.client.dto.request.RefreshTokenRequest;
-import com.project.authtemplate.domain.auth.client.dto.request.SignInRequest;
-import com.project.authtemplate.domain.auth.client.dto.request.SignUpRequest;
+import com.project.authtemplate.domain.auth.client.request.RefreshTokenRequest;
+import com.project.authtemplate.domain.auth.client.request.SignInRequest;
+import com.project.authtemplate.domain.auth.client.request.SignUpRequest;
 import com.project.authtemplate.domain.auth.service.AuthService;
 import com.project.authtemplate.domain.auth.service.response.JsonWebTokenResponse;
 import com.project.authtemplate.domain.auth.service.response.RefreshTokenResponse;

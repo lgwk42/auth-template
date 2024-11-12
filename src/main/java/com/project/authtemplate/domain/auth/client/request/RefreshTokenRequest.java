@@ -1,4 +1,4 @@
-package com.project.authtemplate.domain.auth.client.dto.request;
+package com.project.authtemplate.domain.auth.client.request;
 
 import jakarta.validation.constraints.NotBlank;
 
