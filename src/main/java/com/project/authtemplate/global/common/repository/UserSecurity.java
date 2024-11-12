@@ -1,6 +1,6 @@
 package com.project.authtemplate.global.common.repository;
 
-import com.project.authtemplate.domain.user.client.dto.User;
+import com.project.authtemplate.domain.user.dto.User;
 
 public interface UserSecurity {
 
