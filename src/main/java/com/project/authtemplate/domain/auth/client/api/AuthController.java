@@ -10,9 +10,9 @@ import com.project.authtemplate.global.common.response.BaseResponse;
 import com.project.authtemplate.global.common.response.BaseResponseData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,14 +30,14 @@ public class AuthController {
     @PostMapping("/sign-up")
     @Operation(summary = "회원가입")
     @ResponseStatus(HttpStatus.CREATED)
-    public BaseResponse signUp(@Validated @RequestBody SignUpRequest request){
+    public BaseResponse signUp(@Valid @RequestBody SignUpRequest request){
         authService.signUp(request);
         return BaseResponseData.created("회원가입 성공");
     }
 
     @PostMapping("/sign-in")
     @Operation(summary = "로그인")
-    public BaseResponseData<JsonWebTokenResponse> signIn(@Validated @RequestBody SignInRequest request){
+    public BaseResponseData<JsonWebTokenResponse> signIn(@Valid @RequestBody SignInRequest request){
         return BaseResponseData.ok(
                 "로그인 성공",
                 authService.signIn(request));
