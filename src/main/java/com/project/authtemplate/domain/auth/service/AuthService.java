@@ -10,7 +10,6 @@ import com.project.authtemplate.domain.user.domain.repository.jpa.UserJpaReposit
 import com.project.authtemplate.domain.user.exception.PasswordWrongException;
 import com.project.authtemplate.domain.user.exception.UserExistException;
 import com.project.authtemplate.domain.user.exception.UserNotFoundException;
-import com.project.authtemplate.global.security.jwt.JwtExtract;
 import com.project.authtemplate.global.security.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -25,7 +24,6 @@ public class AuthService {
     private final UserJpaRepository userJpaRepository;
     private final PasswordEncoder encoder;
     private final JwtProvider jwtProvider;
-    private final JwtExtract jwtExtract;
 
     public void signUp(SignUpRequest request) {
         if (checkUserByEmail(request.email())){
@@ -56,7 +54,7 @@ public class AuthService {
     public RefreshTokenResponse refresh(String token) {
         Jws<Claims> claims = jwtProvider.getClaims(token);
         return RefreshTokenResponse.builder()
-                .accessToken(jwtProvider.generateAccessToken(jwtExtract.getEmail(token),
+                .accessToken(jwtProvider.generateAccessToken(claims.getBody().getSubject(),
                         (UserRole) claims.getHeader().get("authority"))).build();
     }
 

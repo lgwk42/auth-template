@@ -4,9 +4,11 @@ import com.project.authtemplate.domain.user.domain.repository.jpa.UserJpaReposit
 import com.project.authtemplate.domain.user.dto.User;
 import com.project.authtemplate.domain.user.exception.UserNotFoundException;
 import com.project.authtemplate.global.security.auth.CustomUserDetails;
-import com.project.authtemplate.global.security.jwt.config.JwtProperties;
-import io.jsonwebtoken.Jwts;
-import jakarta.annotation.PostConstruct;
+import com.project.authtemplate.global.security.jwt.enums.JwtType;
+import com.project.authtemplate.global.security.jwt.exception.TokenTypeException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Header;
+import io.jsonwebtoken.Jws;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -15,30 +17,23 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-
 @Component
 @RequiredArgsConstructor
 public class JwtExtract {
 
     private final UserJpaRepository userRepository;
+    private final JwtProvider jwtProvider;
     private final User userDTO;
-    private final JwtProperties jwtProperties;
-    private SecretKey secretKey;
-
-    @PostConstruct
-    public void init() {
-        this.secretKey = new SecretKeySpec(
-                jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8),
-                Jwts.SIG.HS256.key().build().getAlgorithm()
-        );
-    }
 
     public Authentication getAuthentication(final String token) {
+        final Jws<Claims> claims = jwtProvider.getClaims(token);
+
+        if (isWrongType(claims, JwtType.ACCESS)) {
+            throw TokenTypeException.EXCEPTION;
+        }
+
         User user = userRepository
-                .findByEmail(getEmail(token))
+                .findByEmail(claims.getBody().getSubject())
                 .map(userDTO::toUser)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
@@ -58,12 +53,8 @@ public class JwtExtract {
         return token;
     }
 
-    public String getEmail(String token){
-        return Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token).getPayload().get(
-                        "email", String.class);
+    public boolean isWrongType(final Jws<Claims> claims, final JwtType jwtType) {
+        return !(claims.getHeader().get(Header.JWT_TYPE).equals(jwtType.toString()));
     }
 
 }
