@@ -2,6 +2,19 @@
 해당 템플릿은 Java 21과 Spring Boot를 통해 제작되었습니다. 사용 시 YML 파일에 있는 기본 세팅을 각자에 맞게 변경하신 후 사용해 주세요.
 > 템플릿 사용 시 저장소에 Star 한 번씩 부탁드립니다. 다른 문의사항은 개인 이메일로 부탁드려요.
 
+**사용방법**
+터미널에서 아래 명령어 입력 (사전에 깃과 java 21이 설치되어 있고 YML 설정이 되어 있어야 합니다!)
+```text
+git clone https://github.com/lgwk42/auth-template.git
+```
+생성된 프로젝트 파일로 들어가 아래 명령어 차례대로 실행
+```shell
+./gradlew build
+```
+```shell
+./gradlew bootRun
+```
+
 # API DOCS
 
 ## Sign Up
