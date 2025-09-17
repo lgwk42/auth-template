@@ -131,7 +131,6 @@ Header (Bearer Token)
   "data": {
       "email": "test@gmail.com",
       "name": "테스트",
-      "password": "gq21152fsfg13fasdf",
       "userRole": "USER",
       "createdAt": "2024-07-28T09:00:00",
       "modifiedAt": "2024-08-10T18:15:10"
