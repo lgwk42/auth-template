@@ -1,6 +1,7 @@
 package com.project.authtemplate.domain.user.client.api;
 
-import com.project.authtemplate.domain.user.service.UserService;
+import com.project.authtemplate.domain.user.application.response.UserResponse;
+import com.project.authtemplate.domain.user.application.service.UserService;
 import com.project.authtemplate.domain.user.client.dto.User;
 import com.project.authtemplate.global.common.dto.response.BaseResponseData;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class UserApiHandler {
      *
      * */
     @GetMapping
-    public BaseResponseData<User> getUserByToken() {
+    public BaseResponseData<UserResponse> getUserByToken() {
         return BaseResponseData.ok(
                 "조회 성공",
                 userService.getUser());

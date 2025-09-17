@@ -1,8 +1,9 @@
-package com.project.authtemplate.domain.user.service.impl;
+package com.project.authtemplate.domain.user.application.service.impl;
 
+import com.project.authtemplate.domain.user.application.response.UserResponse;
 import com.project.authtemplate.domain.user.exception.UserAlreadyExistException;
 import com.project.authtemplate.domain.user.exception.UserNotFoundException;
-import com.project.authtemplate.domain.user.service.UserService;
+import com.project.authtemplate.domain.user.application.service.UserService;
 import com.project.authtemplate.domain.user.client.dto.User;
 import com.project.authtemplate.domain.user.domain.entity.UserEntity;
 import com.project.authtemplate.domain.user.domain.repository.jpa.UserJpaRepository;
@@ -23,8 +24,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser() {
-        return userSecurity.getUser();
+    public UserResponse getUser() {
+        User user = userSecurity.getUser();
+        return UserResponse.toUserResponse(user);
     }
 
     @Override
