@@ -3,9 +3,11 @@ package com.project.authtemplate.global.security.auth;
 import com.project.authtemplate.domain.user.client.dto.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 public class CustomUserDetails implements UserDetails {
@@ -18,8 +20,9 @@ public class CustomUserDetails implements UserDetails {
         this.authorities = authorities;
     }
 
-    public CustomUserDetails(final User userDTO) {
-        this.user = userDTO;
+    public CustomUserDetails(final User user) {
+        this.user = user;
+        this.authorities = List.of(new SimpleGrantedAuthority(user.userRole().getKey()));
     }
 
     @Override
