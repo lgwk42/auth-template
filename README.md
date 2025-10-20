@@ -3,18 +3,28 @@
 > 템플릿 사용 시 저장소에 Star 한 번씩 부탁드립니다. 다른 문의사항은 개인 이메일로 부탁드려요.
 
 **사용방법**
-터미널에서 아래 명령어 입력
+<p> 
+  (사전에 깃과 java 21이 설치되어 있고 YML 설정이 되어 있어야 합니다!) <br>
+  터미널에서 아래 명령어 입력 
+</p>
+
 ```text
 git clone https://github.com/lgwk42/auth-template.git
 ```
+
 생성된 프로젝트 파일로 들어가 아래 명령어 차례대로 실행 <br>
-(사전에 깃과 java 21이 설치되어 있고 YML 설정이 되어 있어야 합니다!)
-```shell
-./gradlew build
-```
-```shell
-./gradlew bootRun
-```
+- Linux / MacOS
+  ```shell
+   ./gradlew build
+   ./gradlew bootRun
+   java -jar build/libs/auth-template-0.0.1-SNAPSHOT.jar
+  ```
+- Window
+  ```shell
+   gradlew build
+   gradlew bootRun
+   java -jar build/libs/auth-template-0.0.1-SNAPSHOT.jar
+  ```
 
 # API DOCS
 
