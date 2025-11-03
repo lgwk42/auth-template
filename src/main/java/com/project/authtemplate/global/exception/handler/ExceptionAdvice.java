@@ -1,8 +1,7 @@
 package com.project.authtemplate.global.exception.handler;
 
+import com.project.authtemplate.global.common.dto.response.ErrorResponse;
 import com.project.authtemplate.global.exception.BusinessException;
-import lombok.Builder;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,14 +10,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class ExceptionAdvice {
-
-    @Getter
-    @Builder
-    @RequiredArgsConstructor
-    private static class ErrorResponse {
-        private final int status;
-        private final String message;
-    }
 
     @ExceptionHandler({BusinessException.class})
     public ResponseEntity<ErrorResponse> handleException(BusinessException ex){

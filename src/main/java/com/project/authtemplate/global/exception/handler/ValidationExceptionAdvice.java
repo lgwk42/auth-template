@@ -1,5 +1,6 @@
 package com.project.authtemplate.global.exception.handler;
 
+import com.project.authtemplate.global.common.dto.response.ErrorResponse;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,6 @@ public class ValidationExceptionAdvice {
                 .getFirst()
                 .getDefaultMessage();
         return ErrorResponse.of(message);
-    }
-
-    private record ErrorResponse(int status, String message) {
-        public static ErrorResponse of(String message) {
-            return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), message);
-        }
     }
 
 }
