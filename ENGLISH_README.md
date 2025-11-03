@@ -157,4 +157,3 @@ Header (Bearer Token)
   "message": "유저를 찾을 수 없습니다."
 }
 ```
-````
