@@ -1,83 +1,83 @@
 # Auth Template
-[English version](ENGLISH_README.md) <br>
-해당 템플릿은 Java 21과 Spring Boot를 통해 제작되었습니다. 사용 시 YML 파일에 있는 기본 세팅을 각자에 맞게 변경하신 후 사용해 주세요.
-> 템플릿 사용 시 저장소에 Star 한 번씩 부탁드립니다. 다른 문의사항은 개인 이메일로 부탁드려요.
+This template is built with Java 21 and Spring Boot. Before using it, please modify the default settings in the YML file to match your configuration.
+> When using this template, please give the repository a Star. For other inquiries, please contact via personal email.
+> 
++ Please note that all returned messages are written in Korean.
 
-**사용방법**
+**How to Use**
 <p> 
-  (사전에 깃과 java 21이 설치되어 있고 YML 설정이 되어 있어야 합니다!) <br>
-  터미널에서 아래 명령어 입력 
+  (Git and Java 21 must be pre-installed and YML configuration must be completed!) <br>
+  Enter the following command in the terminal 
 </p>
-
-```text
+```````text
 git clone https://github.com/lgwk42/auth-template.git
-```
+```````
 
-생성된 프로젝트 파일로 들어가 아래 명령어 차례대로 실행 <br>
+Navigate to the created project directory and execute the following commands in order <br>
 - Linux / MacOS
-  ```shell
+```````shell
    ./gradlew build
    ./gradlew bootRun
    java -jar build/libs/auth-template-0.0.1-SNAPSHOT.jar
-  ```
+```````
 - Window
-  ```shell
+```````shell
    gradlew build
    gradlew bootRun
    java -jar build/libs/auth-template-0.0.1-SNAPSHOT.jar
-  ```
+```````
 
 # API DOCS
 
 ## Sign Up
 ```POST /auth/sign-up``` <br>
 **Request**
-```json
+``````json
 {
   "email": "test@gmail.com",
   "name": "테스트",
   "password": "testPassword1234!"
 }
-```
+``````
 |Parameter|Type|Description|
 |---------|----|-----------|
-|Email|String|이메일 (test@gmail.com 처럼 이메일 형식 준수)|
-|Name|String|이름|
-|Password|String|비밀번호 (영문 대/소문자, 특수문자 포함, 10자 이상이어야 함)|
+|Email|String|Email (must follow email format like test@gmail.com)|
+|Name|String|Name|
+|Password|String|Password (must include uppercase/lowercase letters, special characters, and be at least 10 characters long)|
 
 **Response**
 - 201 CREATED
-```json
+``````json
 {
   "status": 201,
   "message": "회원가입 성공"
 }
-```
+``````
 - 403 CONFLICT
-```json
+``````json
 {
   "status": 403,
   "message": "이미 존재하는 유저입니다."
 }
-```
+``````
 
 ## Sign In
 ```POST /auth/sign-in``` <br>
 **Request**
-```json
+`````json
 {
   "email": "test@gmail.com",
   "password": "testPassword1234!"
 }
-```
+`````
 |Parameter|Type|Description|
 |---------|----|-----------|
-|Email|String|이메일 (test@gmail.com 처럼 이메일 형식 준수)|
-|Password|String|비밀번호 (영문 대/소문자, 특수문자 포함, 10자 이상이어야 함)|
+|Email|String|Email (must follow email format like test@gmail.com)|
+|Password|String|Password (must include uppercase/lowercase letters, special characters, and be at least 10 characters long)|
 
 **Response**
 - 200 OK
-```json
+`````json
 {
   "status": 200,
   "message": "로그인 성공",
@@ -86,37 +86,37 @@ git clone https://github.com/lgwk42/auth-template.git
     "refreshToken": "eyJhbGciOiJIUzI1NiJ9.refresh.payload.signature"
   }
 }
-```
+`````
 - 404 NOT FOUND
-```json
+`````json
 {
   "status": 404,
   "message": "유저를 찾을 수 없습니다."
 }
-```
+`````
 - 400 BAD REQUEST
-```json
+`````json
 {
   "status": 400,
   "message": "비밀번호가 맞지 않습니다."
 }
-```
+`````
 
 ## Refresh
 ```POST /auth/refresh``` <br>
 **Request**
-```json
+````json
 {
   "refreshToken": "eyJhbGciOiJIUzI1NiJ9.refresh.payload.signature"
 }
-```
+````
 |Parameter|Type|Description|
 |---------|----|-----------|
-|RefreshToken|String|Refresh 토큰|
+|RefreshToken|String|Refresh token|
 
 **Response**
 - 200 OK
-```json
+````json
 {
   "status": 200,
   "message": "재발급 성공",
@@ -124,7 +124,7 @@ git clone https://github.com/lgwk42/auth-template.git
     "accessToken": "eyJhbGciOiJIUzI1NiJ9.newAccess.payload.signature"
   }
 }
-```
+````
 
 ## Get User
 ```GET /user``` <br>
@@ -132,7 +132,7 @@ git clone https://github.com/lgwk42/auth-template.git
 Header (Bearer Token)
 |Parameter|Type|Description|
 |---------|----|-----------|
-|AccessToken|String|Access 토큰|
+|AccessToken|String|Access token|
 
 **Response**
 - 200 OK
@@ -156,3 +156,4 @@ Header (Bearer Token)
   "message": "유저를 찾을 수 없습니다."
 }
 ```
+````
