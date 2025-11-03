@@ -9,9 +9,10 @@ This template is built with Java 21 and Spring Boot. Before using it, please mod
   (Git and Java 21 must be pre-installed and YML configuration must be completed!) <br>
   Enter the following command in the terminal 
 </p>
-```````text
+
+```text
 git clone https://github.com/lgwk42/auth-template.git
-```````
+```
 
 Navigate to the created project directory and execute the following commands in order <br>
 - Linux / MacOS
