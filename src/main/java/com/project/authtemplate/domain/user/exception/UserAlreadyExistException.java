@@ -7,7 +7,7 @@ public class UserAlreadyExistException extends BusinessException {
 
     public static final UserAlreadyExistException EXCEPTION = new UserAlreadyExistException();
 
-    public UserAlreadyExistException() {
+    private UserAlreadyExistException() {
         super(UserError.USER_ALREADY_EXIST);
     }
 
