@@ -1,6 +1,6 @@
 package com.project.authtemplate.global.security.jwt;
 
-import com.project.authtemplate.domain.user.client.dto.User;
+import com.project.authtemplate.domain.user.domain.model.User;
 import com.project.authtemplate.domain.user.domain.repository.jpa.UserJpaRepository;
 import com.project.authtemplate.domain.user.exception.UserNotFoundException;
 import com.project.authtemplate.global.security.auth.CustomUserDetails;
@@ -31,7 +31,7 @@ public class JwtExtract {
         }
         User user = userRepository
                 .findByEmail(claims.getSubject())
-                .map(User::toUser)
+                .map(User::of)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
         final CustomUserDetails details = new CustomUserDetails(user);
         return new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());

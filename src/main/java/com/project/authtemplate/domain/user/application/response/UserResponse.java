@@ -1,10 +1,12 @@
 package com.project.authtemplate.domain.user.application.response;
 
-import com.project.authtemplate.domain.user.client.dto.User;
 import com.project.authtemplate.domain.user.domain.enums.UserRole;
+import com.project.authtemplate.domain.user.domain.model.User;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
+@Builder
 public record UserResponse(
         String email,
         String name,
@@ -12,13 +14,15 @@ public record UserResponse(
         LocalDateTime createdAt,
         LocalDateTime modifiedAt
 ) {
-    public static UserResponse toUserResponse(User user) {
-        return new UserResponse(
-                user.email(),
-                user.name(),
-                user.userRole(),
-                user.createdAt(),
-                user.modifiedAt()
-        );
+
+    public static UserResponse of(User user) {
+        return UserResponse.builder()
+                .email(user.email())
+                .name(user.name())
+                .userRole(user.userRole())
+                .createdAt(user.createdAt())
+                .modifiedAt(user.modifiedAt())
+                .build();
     }
+
 }

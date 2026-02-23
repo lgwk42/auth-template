@@ -1,6 +1,6 @@
 package com.project.authtemplate.global.security.auth;
 
-import com.project.authtemplate.domain.user.client.dto.User;
+import com.project.authtemplate.domain.user.domain.model.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
