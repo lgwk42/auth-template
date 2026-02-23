@@ -17,8 +17,6 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @Component
@@ -28,13 +26,14 @@ public class JwtProvider {
     private final JwtProperties jwtProperties;
 
     private SecretKey getSigningKey() {
-        return Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(jwtProperties.secretKey().getBytes(StandardCharsets.UTF_8));
     }
 
-    public Jws<Claims> getClaims(final String token) {
+    public Jws<Claims> getClaims(String token) {
         try {
             return Jwts.parser()
                     .verifyWith(getSigningKey())
+                    .requireIssuer(jwtProperties.issuer())
                     .build()
                     .parseSignedClaims(token);
         } catch (ExpiredJwtException e) {
@@ -50,33 +49,41 @@ public class JwtProvider {
         }
     }
 
-    public String generateAccessToken(final String email, final UserRole userRole) {
-        Instant now = Instant.now();
+    public String generateAccessToken(String email, UserRole userRole) {
         return Jwts.builder()
-                .header()
-                .type("JWT")
-                .and()
+                .header().type("JWT").and()
                 .subject(email)
+                .issuer(jwtProperties.issuer())
                 .claim("token_type", JwtType.ACCESS.name())
                 .claim("authority", userRole.getKey())
-                .issuedAt(Date.from(now))
-                .expiration(Date.from(now.plus(jwtProperties.getExpiration(), ChronoUnit.MILLIS)))
-                .signWith(getSigningKey(), Jwts.SIG.HS256)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + jwtProperties.expiration()))
+                .signWith(getSigningKey())
                 .compact();
     }
 
-    public String generateRefreshToken(final String email, final UserRole userRole) {
-        Instant now = Instant.now();
+    /** Refresh 토큰으로부터 Access 토큰 재발급 (authority 없이) */
+    public String generateAccessTokenFromRefresh(String email) {
         return Jwts.builder()
-                .header()
-                .type("JWT")
-                .and()
+                .header().type("JWT").and()
                 .subject(email)
+                .issuer(jwtProperties.issuer())
+                .claim("token_type", JwtType.ACCESS.name())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + jwtProperties.expiration()))
+                .signWith(getSigningKey())
+                .compact();
+    }
+
+    public String generateRefreshToken(String email) {
+        return Jwts.builder()
+                .header().type("JWT").and()
+                .subject(email)
+                .issuer(jwtProperties.issuer())
                 .claim("token_type", JwtType.REFRESH.name())
-                .claim("authority", userRole.getKey())
-                .issuedAt(Date.from(now))
-                .expiration(Date.from(now.plus(jwtProperties.getRefreshExpiration(), ChronoUnit.MILLIS)))
-                .signWith(getSigningKey(), Jwts.SIG.HS256)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + jwtProperties.refreshExpiration()))
+                .signWith(getSigningKey())
                 .compact();
     }
 
