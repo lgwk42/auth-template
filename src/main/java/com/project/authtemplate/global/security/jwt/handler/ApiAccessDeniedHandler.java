@@ -23,8 +23,8 @@ public class ApiAccessDeniedHandler implements AccessDeniedHandler {
                        HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException {
 
-        var errorCode = ErrorCode.FORBIDDEN;
-        var body = BaseResponse.of(errorCode);
+        ErrorCode errorCode = ErrorCode.FORBIDDEN;
+        BaseResponse body = BaseResponse.of(errorCode);
 
         response.setStatus(errorCode.getStatus().value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
