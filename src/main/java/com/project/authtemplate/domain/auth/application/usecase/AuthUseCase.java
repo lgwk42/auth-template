@@ -6,15 +6,16 @@ import com.project.authtemplate.domain.auth.application.service.AuthService;
 import com.project.authtemplate.domain.auth.client.request.RefreshTokenRequest;
 import com.project.authtemplate.domain.auth.client.request.SignInRequest;
 import com.project.authtemplate.domain.auth.client.request.SignUpRequest;
-import com.project.authtemplate.domain.user.client.dto.User;
-import com.project.authtemplate.domain.user.domain.entity.UserEntity;
-import com.project.authtemplate.domain.user.domain.enums.UserRole;
 import com.project.authtemplate.domain.user.application.service.UserService;
+import com.project.authtemplate.domain.user.domain.enums.UserRole;
+import com.project.authtemplate.domain.user.domain.model.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Slf4j
+@Component
 @RequiredArgsConstructor
 public class AuthUseCase {
 
@@ -23,23 +24,25 @@ public class AuthUseCase {
     private final PasswordEncoder passwordEncoder;
 
     public void signUp(SignUpRequest request) {
-        userService.checkUserEmail(request.email());
-        userService.save(UserEntity.builder()
-                .email(request.email())
-                .password(passwordEncoder.encode(request.password()))
-                .name(request.name())
-                .userRole(UserRole.USER)
-                .build()
+        log.info("[AuthUseCase] signUp - email={}", request.email());
+        userService.validateEmailNotExist(request.email());
+        userService.save(
+                request.email(),
+                passwordEncoder.encode(request.password()),
+                request.name(),
+                UserRole.USER
         );
     }
 
     public JsonWebTokenResponse signIn(SignInRequest request) {
-        User user = userService.getUser(request.email());
+        log.info("[AuthUseCase] signIn - email={}", request.email());
+        User user = userService.findByEmail(request.email());
         authService.checkPassword(request.password(), user.password());
         return authService.generateToken(request.email(), user.userRole());
     }
 
     public RefreshTokenResponse refresh(RefreshTokenRequest request) {
+        log.info("[AuthUseCase] refresh");
         return authService.refreshToken(request.refreshToken());
     }
 
