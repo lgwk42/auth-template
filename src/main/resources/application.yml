@@ -27,6 +27,7 @@ spring:
 
 application:
   jwt:
-    secretKey: {JWT_SECRET_KEY}
+    secret-key: ${JWT_SECRET_KEY}
     expiration: 86400000
-    refreshExpiration: 604800000
+    refresh-expiration: 604800000
+    issuer: auth-template
