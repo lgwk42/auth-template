@@ -9,10 +9,10 @@ spring:
       password: test1234!
 
   datasource:
-    url: jdbc:mysql://{DB_URL}:3306/{SCHEMA_NAME}
+    url: jdbc:mysql://localhost:3306/auth
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: {DB_USERNAME}
-    password: {DB_PASSWORD}
+    username: mysql
+    password: mysql
 
   jpa:
     database: mysql
