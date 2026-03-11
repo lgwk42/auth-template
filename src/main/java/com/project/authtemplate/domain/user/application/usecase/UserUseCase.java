@@ -1,7 +1,6 @@
 package com.project.authtemplate.domain.user.application.usecase;
 
 import com.project.authtemplate.domain.user.application.response.UserResponse;
-import com.project.authtemplate.domain.user.application.service.UserService;
 import com.project.authtemplate.domain.user.domain.model.User;
 import com.project.authtemplate.global.common.repository.user.UserSecurity;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserUseCase {
 
-    private final UserService userService;
     private final UserSecurity userSecurity;
 
     public UserResponse getMyInfo() {

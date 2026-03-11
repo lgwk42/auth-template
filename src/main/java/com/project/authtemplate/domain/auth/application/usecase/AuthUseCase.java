@@ -6,6 +6,7 @@ import com.project.authtemplate.domain.auth.application.service.AuthService;
 import com.project.authtemplate.domain.auth.client.request.RefreshTokenRequest;
 import com.project.authtemplate.domain.auth.client.request.SignInRequest;
 import com.project.authtemplate.domain.auth.client.request.SignUpRequest;
+import com.project.authtemplate.domain.user.application.query.UserQueryService;
 import com.project.authtemplate.domain.user.application.service.UserService;
 import com.project.authtemplate.domain.user.domain.enums.UserRole;
 import com.project.authtemplate.domain.user.domain.model.User;
@@ -21,11 +22,12 @@ public class AuthUseCase {
 
     private final AuthService authService;
     private final UserService userService;
+    private final UserQueryService userQueryService;
     private final PasswordEncoder passwordEncoder;
 
     public void signUp(SignUpRequest request) {
         log.info("[AuthUseCase] signUp - email={}", request.email());
-        userService.validateEmailNotExist(request.email());
+        userQueryService.checkEmailNotExist(request.email());
         userService.save(
                 request.email(),
                 passwordEncoder.encode(request.password()),
@@ -36,7 +38,7 @@ public class AuthUseCase {
 
     public JsonWebTokenResponse signIn(SignInRequest request) {
         log.info("[AuthUseCase] signIn - email={}", request.email());
-        User user = userService.findByEmail(request.email());
+        User user = userQueryService.findByEmail(request.email());
         authService.checkPassword(request.password(), user.password());
         return authService.generateToken(request.email(), user.userRole());
     }
